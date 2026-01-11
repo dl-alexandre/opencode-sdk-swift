@@ -8,7 +8,7 @@ struct SimpleBody: Codable, Sendable {
 struct TestHelpers {
     static func makeClient(
         baseURL: String = "https://api.example.com",
-        apiKey: String = "test-key",
+        apiKey: String? = "test-key",
         apiKeyPrefix: String? = "Bearer",
         userAgent: String? = nil
     ) -> OpenCodeClient {

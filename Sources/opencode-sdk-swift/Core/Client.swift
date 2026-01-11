@@ -171,12 +171,12 @@ public actor OpenCodeClient {
         urlRequest.httpMethod = request.method.rawValue
 
         var headers = request.headers
-        if !configuration.apiKey.isEmpty {
+        if let apiKey = configuration.apiKey, !apiKey.isEmpty {
             let value: String
             if let prefix = configuration.apiKeyPrefix, !prefix.isEmpty {
-                value = "\(prefix) \(configuration.apiKey)"
+                value = "\(prefix) \(apiKey)"
             } else {
-                value = configuration.apiKey
+                value = apiKey
             }
             headers[configuration.apiKeyHeader] = value
         }

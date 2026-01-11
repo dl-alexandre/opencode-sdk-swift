@@ -19,7 +19,7 @@ import Testing
 @Test func urlRequestEncodesBodyAndHeaders() async throws {
     let client = TestHelpers.makeClient(
         baseURL: "https://api.example.com",
-        apiKey: "",
+        apiKey: nil,
         userAgent: "opencode-swift-tests/0.1"
     )
     let request = TestHelpers.makeRequest(

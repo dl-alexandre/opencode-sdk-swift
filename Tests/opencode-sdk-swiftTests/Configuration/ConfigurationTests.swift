@@ -17,7 +17,7 @@ import Testing
 }
 
 @Test func configurationEmptyApiKey() async throws {
-    let client = TestHelpers.makeClient(apiKey: "")
+    let client = TestHelpers.makeClient(apiKey: nil)
     let request = TestHelpers.makeRequest()
     let urlRequest = try client.makeURLRequest(from: request, bodyData: nil)
     #expect(urlRequest.value(forHTTPHeaderField: "Authorization") == nil)

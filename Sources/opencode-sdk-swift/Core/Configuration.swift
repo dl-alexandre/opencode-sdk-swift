@@ -2,7 +2,7 @@ import Foundation
 
 public struct OpenCodeConfiguration: Sendable {
     public let baseURL: URL
-    public let apiKey: String
+    public let apiKey: String?
     public let apiKeyHeader: String
     public let apiKeyPrefix: String?
     public let userAgent: String?
@@ -10,7 +10,7 @@ public struct OpenCodeConfiguration: Sendable {
 
     public init(
         baseURL: URL,
-        apiKey: String,
+        apiKey: String? = nil,
         apiKeyHeader: String = "Authorization",
         apiKeyPrefix: String? = "Bearer",
         userAgent: String? = nil,

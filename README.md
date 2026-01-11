@@ -36,6 +36,8 @@ Or add it via Xcode:
 
 ## Quick Start
 
+Connect to a running OpenCode server:
+
 ```swift
 import Foundation
 import opencode_sdk_swift
@@ -43,8 +45,7 @@ import opencode_sdk_swift
 @available(macOS 12.0, *)
 func example() async throws {
     let configuration = OpenCodeConfiguration(
-        baseURL: URL(string: "https://api.opencode.ai")!,
-        apiKey: "your-api-key"
+        baseURL: URL(string: "http://localhost:4096")!
     )
     
     let client = OpenCodeClient(configuration: configuration)
@@ -56,27 +57,26 @@ func example() async throws {
 
 ## Configuration
 
-Create an `OpenCodeConfiguration` to configure the client:
+Create an `OpenCodeConfiguration` to configure the client. The client connects to a running OpenCode server instance:
 
 ```swift
 let configuration = OpenCodeConfiguration(
-    baseURL: URL(string: "https://api.opencode.ai")!,
-    apiKey: "your-api-key",
-    apiKeyHeader: "Authorization",  // Default
-    apiKeyPrefix: "Bearer",          // Default
-    userAgent: "MyApp/1.0",          // Optional
-    timeout: 60                      // Default: 60 seconds
+    baseURL: URL(string: "http://localhost:4096")!,
+    userAgent: "MyApp/1.0",
+    timeout: 60
 )
 ```
 
 ### Configuration Options
 
-- `baseURL`: The base URL for the OpenCode API
-- `apiKey`: Your API key
+- `baseURL`: The base URL of the OpenCode server (default: `http://localhost:4096`)
+- `apiKey`: Optional API key for server authentication (if required by your server setup)
 - `apiKeyHeader`: HTTP header name for the API key (default: `"Authorization"`)
 - `apiKeyPrefix`: Prefix for the API key value (default: `"Bearer"`)
 - `userAgent`: Optional custom user agent string
 - `timeout`: Request timeout in seconds (default: `60`)
+
+**Note**: The OpenCode client typically doesn't require an API key. API keys are used for authenticating with AI providers (Anthropic, OpenAI, etc.) via the `auth.set()` method, not for connecting to the OpenCode server itself.
 
 ## Usage
 
@@ -113,6 +113,17 @@ Execute commands:
 let message = try await client.session.command(
     sessionID: "session-id",
     request: SessionCommandRequest(command: "ls -la")
+)
+```
+
+### Authentication
+
+Set authentication credentials for AI providers:
+
+```swift
+try await client.auth.set(
+    providerID: "anthropic",
+    request: Auth(type: "api", key: "your-api-key")
 )
 ```
 
